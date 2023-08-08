@@ -1,0 +1,32 @@
+version: '3'
+services:
+  db:
+    image: mariadb:11.0.2
+    container_name: aurigaone_mariadb
+    volumes:
+      - data1:/var/lib/mysql
+    environment:
+      - "MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}"
+      - "MYSQL_DATABASE=${DB_NAME}"
+      - "MYSQL_USER=${DB_USER}"
+      - "MYSQL_PASSWORD=${DB_PASSWORD}"
+    ports:
+      - "5000:3306"
+  backend: 
+    build:
+      context: ./backend
+    command: sh -c "python3 manage.py makemigrations && python3 manage.py migrate --noinput && python3 manage.py runserver 0.0.0.0:8000"
+    # command: sh -c "python3 manage.py runserver 0.0.0.0:8000"
+    container_name: aurigaone_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+volumes:
+  data1:
+
