@@ -1,1 +1,26 @@
+# Files and directories to exclude from the Docker context
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+*.bak
+
+# Virtual environment
 venv/
+.pip_cache/
+.pip-accel
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.iml
+
+# Local development files
+.env
+
+# Version control system
+.git/
+.gitignore
