@@ -24,7 +24,7 @@ from backend import settings
 from common.swagger import swagger_view
 
 v1_urlpatterns = [
-
+    path('users/', include('users.api.v1.urls')),
 ]
 
 urlpatterns = [
