@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
@@ -35,6 +36,8 @@ AUTH_USER_MODEL = 'users.User'
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',  # Admin Theme
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -70,7 +73,9 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -136,10 +141,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 
-if DEBUG:
-    STATICFILES_DIRS = []
-else:
+if not DEBUG:
     STATIC_ROOT = config('STATIC_ROOT', default="/var/www/static/")
     
 # Default primary key field type
@@ -183,4 +189,43 @@ SWAGGER_SETTINGS = {
 # This allows the toolbar to be displayed for requests from this IP address.
 INTERNAL_IPS = ('127.0.0.1', '0.0.0.0', 'localhost',)
 
-
+# Jazzmin Settings
+from common.constants import TITLE
+JAZZMIN_SETTINGS = {
+    "site_title": TITLE,
+    "site_header": TITLE,
+    "site_brand": TITLE,
+    "site_logo": "img/logo.png",
+    "login_logo": None,
+    "login_logo_dark": None,
+    "site_logo_classes": "img-circle",
+    "site_icon": None,
+    "welcome_sign": f"Welcome to the {TITLE}",
+    "copyright": TITLE,
+    "search_model": ["auth.User", "auth.Group"],
+    "user_avatar": None,
+    "topmenu_links": [
+        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"model": "auth.User"},
+    ],
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "hide_apps": [],
+    "hide_models": [],
+    "order_with_respect_to": ["users", "auth"],
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "users.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+    "related_modal_active": False,
+    "custom_css": None,
+    "custom_js": None,
+    "use_google_fonts_cdn": True,
+    "show_ui_builder": True,
+    "changeform_format": "horizontal_tabs",
+    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
+    "language_chooser": False,
+}

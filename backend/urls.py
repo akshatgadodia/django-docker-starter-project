@@ -35,13 +35,12 @@ urlpatterns = [
 
 # Configuration for the development mode
 if config('DEBUG', default=False, cast=bool):
-    # URL for django debug toolbar
     urlpatterns.append(path('__debug__/', include(debug_toolbar.urls))),
 else:
+    urlpatterns.append(re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT})),
     urlpatterns.append(re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT})),
 
 # Custom Admin Titles
 admin.site.site_header = constants.TITLE
 admin.site.site_title = constants.TITLE
 admin.site.index_title = constants.TITLE
-admin.site.login_template = 'admin/admin_login.html'

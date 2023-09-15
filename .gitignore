@@ -51,4 +51,4 @@ data/
 #django Migrations
 **/migrations/*
 # Don't ignore __init__.py
-!**migrations/__init__.py
+!**/migrations/__init__.py
