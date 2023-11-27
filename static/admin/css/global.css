@@ -1,0 +1,62 @@
+.brand-link{
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.52rem 0.5rem !important;
+}
+.brand-text{
+    font-size: 1.25rem;
+    margin-left: 5px !important;;
+}
+
+.selector-available select, .selector-chosen select {
+    overflow-x: auto !important;
+}
+
+#recent-actions-module .timeline-item{
+    display: flex;
+    flex-direction: column;
+}
+
+#recent-actions-module .time {
+    order: 2;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    width: 100%;
+    padding: 8px 10px;
+}
+
+#recent-actions-module h3.timeline-header {
+    order: 1;
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+}
+
+#recent-actions-module .timeline-body {
+    order: 3;
+}
+
+fieldset .control-label{
+    margin-top: 0 !important;
+}
+
+fieldset .float-md-right{
+    text-align: right;
+}
+
+.nav-item a{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.wrapper > .content-wrapper > .content.border-bottom.mb-2 > .container-fluid > .row > div{
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (min-width: 576px) {
+    #group_form .field-permissions, #user_form .field-groups, #user_form .field-user_permissions {
+        flex: 0 0 75%;
+        --webkit-flex: 0 0 75%;
+        max-width: 100%;
+    }
+}

@@ -13,11 +13,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 from decouple import config
-from datetime import timedelta
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -44,11 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # Installed Apps
     'rest_framework',
     'drf_yasg',
-    
+
     # Created Apps
     'users',
 ]
@@ -66,7 +65,6 @@ MIDDLEWARE = [
 if DEBUG:
     INSTALLED_APPS.append('debug_toolbar')
     MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
-
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -90,7 +88,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -104,7 +101,6 @@ DATABASES = {
         'PORT': config('DB_PORT')
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -124,7 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -136,7 +131,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -147,85 +141,16 @@ STATICFILES_DIRS = [
 
 if not DEBUG:
     STATIC_ROOT = config('STATIC_ROOT', default="/var/www/static/")
-    
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# REST Framework Settings
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ],
-    # 'EXCEPTION_HANDLER': 'base.exceptions.custom_exception_handler'
-}
-
-# Simple JWT Settings
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(hours=int(config('JWT_ACCESS_TOKEN_LIFETIME_IN_HOURS'))),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=int(config('JWT_REFRESH_TOKEN_LIFETIME_IN_DAYS'))),
-    "UPDATE_LAST_LOGIN": True,
-    "SIGNING_KEY": config('SECRET_KEY'),
-}
-
-# Swagger Settings
-SWAGGER_SETTINGS = {
-    'USE_SESSION_AUTH': False,
-    'PERSIST_AUTH': True,
-    'SECURITY_DEFINITIONS': {
-        'Bearer': {
-            'type': 'apiKey',
-            'in': 'header',
-            'name': 'Authorization',
-            'format': 'Bearer'
-        }
-    },
-}
-
 # This allows the toolbar to be displayed for requests from this IP address.
 INTERNAL_IPS = ('127.0.0.1', '0.0.0.0', 'localhost',)
 
-# Jazzmin Settings
-from common.constants import TITLE
-JAZZMIN_SETTINGS = {
-    "site_title": TITLE,
-    "site_header": TITLE,
-    "site_brand": TITLE,
-    "site_logo": "img/logo.png",
-    "login_logo": None,
-    "login_logo_dark": None,
-    "site_logo_classes": "img-circle",
-    "site_icon": None,
-    "welcome_sign": f"Welcome to the {TITLE}",
-    "copyright": TITLE,
-    "search_model": ["auth.User", "auth.Group"],
-    "user_avatar": None,
-    "topmenu_links": [
-        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
-        {"model": "auth.User"},
-    ],
-    "show_sidebar": True,
-    "navigation_expanded": True,
-    "hide_apps": [],
-    "hide_models": [],
-    "order_with_respect_to": ["users", "auth"],
-    "icons": {
-        "auth": "fas fa-users-cog",
-        "users.user": "fas fa-user",
-        "auth.Group": "fas fa-users",
-    },
-    "default_icon_parents": "fas fa-chevron-circle-right",
-    "default_icon_children": "fas fa-circle",
-    "related_modal_active": False,
-    "custom_css": None,
-    "custom_js": None,
-    "use_google_fonts_cdn": True,
-    "show_ui_builder": True,
-    "changeform_format": "horizontal_tabs",
-    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
-    "language_chooser": False,
-}
+
+# Celery Settings
+CELERY_BROKER_URL = config('CELERY_BROKER_URL', default='redis://localhost:6379')
+CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND', default='redis://localhost:6379')
