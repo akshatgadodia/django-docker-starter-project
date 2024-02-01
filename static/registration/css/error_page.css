@@ -1,0 +1,29 @@
+.error_page{
+    width: 100%;
+    background-color: #f4f6f9;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.container img {
+    max-width: 450px;
+}
+
+.main-text{
+    font-weight: 600;
+    padding-bottom: 10px;
+}
+
+.back-to-home {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}

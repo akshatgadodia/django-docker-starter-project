@@ -6,13 +6,14 @@ from common.utils import manage_delete_dependency
 
 
 class SoftDeletionQuerySet(QuerySet):
+    """
+    Custom Queryset to handle Soft Delete
+    """
     def delete(self, user=None):
         """
         Soft deletes objects in the queryset and manages dependencies.
-
         Args:
             user: The user initiating the deletion (optional).
-
         Returns:
             int: The number of objects updated (soft deleted).
         """
@@ -39,7 +40,6 @@ class SoftDeletionQuerySet(QuerySet):
     def hard_delete(self):
         """
         Hard deletes (permanently removes) objects in the queryset.
-
         Returns:
             int: The number of objects deleted.
         """
@@ -48,17 +48,23 @@ class SoftDeletionQuerySet(QuerySet):
     def non_deleted(self):
         """
         Returns a queryset containing non-deleted objects.
-
         Returns:
             SoftDeletionQuerySet: A queryset of non-deleted objects.
         """
-        return self.filter(is_deleted=False)
+        return self.filter(deleted_at=None)
 
     def deleted(self):
         """
         Returns a queryset containing deleted objects.
-
         Returns:
             SoftDeletionQuerySet: A queryset of deleted objects.
         """
-        return self.exclude(is_deleted=False)
+        return self.exclude(deleted_at=None)
+
+
+class BaseQueryset(SoftDeletionQuerySet):
+    """
+    Custom Queryset which inherits SoftDeletionQuerySet which helps in providing
+    the common functionality
+    """
+    pass

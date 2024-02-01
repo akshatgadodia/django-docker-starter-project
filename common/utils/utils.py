@@ -1,10 +1,17 @@
 from datetime import datetime
 from django.db import transaction
 
+from common.logging import LogInfo
+
 
 def set_delete_attributes(obj, user):
     """
     Helper function to set delete attributes for an object.
+    Args:
+        obj: The object to be marked as deleted.
+        user: The user initiating the deletion.
+    Returns:
+        None
     """
     obj.is_deleted = True
     obj.deleted_at = datetime.utcnow()
@@ -15,11 +22,9 @@ def set_delete_attributes(obj, user):
 def manage_delete_dependency(collector, user=None):
     """
     Main function to manage the deletion of objects and their dependencies.
-
     Args:
         collector: An object collector containing fast_deletes and data.
         user: The user initiating the deletion (optional).
-
     Note:
         The collector parameter is assumed to have the following structure:
         - collector.fast_deletes: A list of sets, each containing objects for fast deletion.
@@ -40,4 +45,4 @@ def manage_delete_dependency(collector, user=None):
                 for obj in data_objects:
                     set_delete_attributes(obj, user)
     except Exception as e:
-        pass
+        LogInfo.exception(e)

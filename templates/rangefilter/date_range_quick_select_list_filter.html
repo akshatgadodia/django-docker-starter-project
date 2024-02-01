@@ -1,0 +1,18 @@
+{% extends 'rangefilter/date_filter.html' %}
+
+
+{% block quick-select-choices %}
+    <div class="form-group">
+        <select class="form-control search-filter rangefilter_custom_date_range_quick_select" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                data-name="{{ field_name }}">
+            <option value="" selected disabled>{{ title|title }}</option>
+            {% for choice in choices %}
+                {% if choice.name %}
+                     <option data-name="" value="{{ choice.query_string|iriencode }}" {% if choice.selected %}selected{% endif %}>
+                    {{ choice.display }}
+                    </option>}
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+{% endblock %}

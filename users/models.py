@@ -15,7 +15,7 @@ class User(AbstractUser):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'date_of_birth']
+    REQUIRED_FIELDS = []
 
     class Meta:
         ordering = ('name',)

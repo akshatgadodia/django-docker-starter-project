@@ -1,0 +1,85 @@
+.admindatefilter {
+    border-bottom: 1px solid var(--border-color);
+    display: inline-flex;
+    transform: translateY(-0.18rem);
+    flex-wrap: wrap;
+}
+
+.admindatefilter p {
+    margin: 0;
+    line-height: 0;
+    position: relative;
+}
+
+.admindatefilter p.date {
+    margin-right: 0.5em;
+}
+
+.admindatefilter p input {
+    margin: 0;
+}
+
+.admindatefilter p.datetime {
+    line-height: 0;
+}
+
+.admindatefilter .timezonewarning {
+    display: none;
+}
+
+.admindatefilter .datetimeshortcuts a:first-child {
+    margin-right: 4px;
+    display: none;
+}
+
+.calendar td a:focus, .timelist a:focus, .calendar td a:hover, .timelist a:hover {
+    color: white !important;
+}
+
+.calendarbox {
+    z-index: 1100;
+    background: inherit;
+}
+
+.clockbox {
+    z-index: 1100;
+    margin-left: -8em !important;
+    margin-top: 5em !important;
+}
+
+.admindatefilter .datetimeshortcuts {
+    font-size: 0;
+    position: absolute;
+    right: 30px;
+    line-height: 30px;
+}
+
+.admindatefilter a {
+    color: #999;
+    position: absolute;
+    padding-top: 3px;
+    padding-left: 4px;
+}
+
+.calendarbox .calendar {
+    display: inline-block;
+}
+
+@media (max-width: 500px) {
+    .admindatefilter p.date {
+        margin: 0 0.5em 0.5em 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .calendarbox {
+        margin-left: -16em !important;
+        margin-top: 9em !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .calendarbox {
+        overflow: visible;
+    }
+}

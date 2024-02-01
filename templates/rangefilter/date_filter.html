@@ -1,0 +1,31 @@
+{% load i18n rangefilter_compat %}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/widgets.css' %}">
+<link rel="stylesheet" href="{% static "rangefilter/css/date_filter.css" %}">
+<style>
+    {% default_css_vars_if_needed %}
+</style>
+<script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+<script>
+    django.jQuery('document').ready(function () {
+        if (!('DateTimeShortcuts' in window)) {
+            django.jQuery.when(
+                {% for m in spec.form.js %}
+                    django.jQuery.getScript('{{m}}'),
+                {% endfor %}
+                django.jQuery.Deferred(function (deferred) {
+                    django.jQuery(deferred.resolve);
+                })
+            ).done(function () {
+                django.jQuery('.datetimeshortcuts').remove();
+                DateTimeShortcuts.init();
+            });
+        }
+    });
+</script>
+{% block quick-select-choices %}{% endblock %}
+<div class="admindatefilter">
+    {{ spec.form.as_p }}
+    {% for choice in choices %}
+        <input type="hidden" id="{{ choice.system_name }}-query-string" value="{{ choice.query_string }}">
+    {% endfor %}
+</div>

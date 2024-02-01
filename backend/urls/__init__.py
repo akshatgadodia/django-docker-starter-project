@@ -19,25 +19,20 @@ from django.urls import path, re_path, include
 from django.views.static import serve
 from decouple import config
 import debug_toolbar
+
 from common import constants
 from backend import settings
-from common.swagger import swagger_view
-
-v1_urlpatterns = [
-    path('users/', include('users.api.v1.urls')),
-]
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-docs/', swagger_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('api/v1/', include(v1_urlpatterns)),
+    path('api/', include('backend.urls.api')),
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 
 # Configuration for the development mode
 if config('DEBUG', default=False, cast=bool):
     urlpatterns.append(path('__debug__/', include(debug_toolbar.urls))),
 else:
-    urlpatterns.append(re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT})),
     urlpatterns.append(re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT})),
 
 # Custom Admin Titles

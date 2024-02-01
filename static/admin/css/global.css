@@ -1,3 +1,6 @@
+.form-inline .small{
+    margin-left: 10px;
+}
 .brand-link{
     display: flex !important;
     align-items: center !important;
@@ -7,11 +10,39 @@
     font-size: 1.25rem;
     margin-left: 5px !important;;
 }
+.sidebar .user-panel{
+    padding-bottom: 1rem !important;
+    align-items: center !important;
+}
+.text-sm .select2-container--default .select2-selection--single .select2-selection__rendered, select.form-control-sm~.select2-container--default .select2-selection--single .select2-selection__rendered {
+     margin-top: 0 !important;
+}
+
+.alert-success > a, .alert-danger > a {
+    color: #fff !important;
+}
+
+body:not(.layout-fixed) .main-sidebar {
+ height: 100vh !important;
+ position: fixed !important;
+}
+
+body:not(.layout-fixed) .main-sidebar .sidebar {
+ overflow-y: hidden !important;
+}
+
+body:not(.layout-fixed) .main-sidebar .sidebar:hover {
+ overflow-y: auto !important;
+ padding-bottom: 2rem;
+}
 
 .selector-available select, .selector-chosen select {
     overflow-x: auto !important;
 }
 
+.sidebar nav{
+    padding-top: 10px;
+}
 #recent-actions-module .timeline-item{
     display: flex;
     flex-direction: column;
@@ -42,6 +73,18 @@ fieldset .float-md-right{
     text-align: right;
 }
 
+.content-wrapper{
+    background-color: #f8f8f8 !important;
+}
+
+[class*=sidebar-dark-], .navbar-navy{
+    background-color: #122842 !important;
+}
+
+.navbar-dark{
+    border-color: #122842 !important;
+}
+
 .nav-item a{
     display: flex;
     align-items: center;
@@ -51,6 +94,30 @@ fieldset .float-md-right{
 .wrapper > .content-wrapper > .content.border-bottom.mb-2 > .container-fluid > .row > div{
     display: flex;
     justify-content: space-between;
+}
+
+.wrapper > .content-wrapper > .content.border-bottom.mb-2 > .container-fluid > .row > div > h1{
+    border-right: none !important;
+}
+
+.chnagelist-filters-text{
+    padding-right: 3px;
+}
+
+.text-sm .select2-container--default .select2-selection--single .select2-selection__rendered, select.form-control-sm~.select2-container--default .select2-selection--single .select2-selection__rendered {
+     margin-top: 0!important;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered{
+    padding: 0 !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+     margin-top: 0 !important;
+}
+
+.form-group>.row input[type="number"]{
+    width: 100%!important;
 }
 
 @media (min-width: 576px) {

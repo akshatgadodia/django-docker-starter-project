@@ -1,0 +1,26 @@
+{% extends "registration/base_registration.html" %}
+{% load i18n static jazzmin admin_urls %}
+
+{% block title %}{% translate 'Forbidden' %}{% endblock %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static "registration/css/error_page.css" %}">
+{% endblock %}
+
+{% block bodyclass %}error_page{% endblock %}
+
+{% block content %}
+    <main class="container">
+        <img class="img-403" src="{% static "img/403.png" %}" alt="403-error">
+        <div>
+            <h2 class="mb-1 mt-4 main-text">
+                Forbidden
+            </h2>
+            <div class="text-muted error-text">
+                Sorry, you do not have permission to access this page. Please contact the administrator.
+            </div>
+            <div class="mt-6 back-to-home"><a href="/" class="btn btn-primary">Back to Home</a></div>
+        </div>
+    </main>
+{% endblock %}
+

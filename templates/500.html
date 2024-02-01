@@ -1,0 +1,26 @@
+{% extends "registration/base_registration.html" %}
+{% load i18n static jazzmin admin_urls %}
+
+{% block title %}{% translate 'Internal Server Error' %}{% endblock %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static "registration/css/error_page.css" %}">
+{% endblock %}
+
+{% block bodyclass %}error_page{% endblock %}
+
+{% block content %}
+    <main class="container">
+        <img class="img-500" src="{% static "img/500.png" %}" alt="500-error">
+        <div>
+            <h2 class="mb-1 mt-4 main-text">
+                Internal Server Error
+            </h2>
+            <div class="text-muted error-text">
+                An error occurred. Please contact the administrator.
+            </div>
+            <div class="mt-6 back-to-home"><a href="/" class="btn btn-primary">Back to Home</a></div>
+        </div>
+    </main>
+{% endblock %}
+

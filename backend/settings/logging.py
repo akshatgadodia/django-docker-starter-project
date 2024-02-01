@@ -11,7 +11,7 @@ if not os.path.exists(LOGS_DIR):
 logs_file_size = config('MAX_LOGS_FILE_SIZE_IN_MB', cast=int, default=2)
 logs_file_backup_count = config('MAX_LOGS_FILE_TO_STORED', cast=int, default=5)
 
-logging = {
+LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
@@ -32,14 +32,6 @@ logging = {
             'formatter': 'verbose',
             'filename': os.path.join(LOGS_DIR, 'sql_queries.log'),
         },
-        'api_handler': {
-            'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'maxBytes': logs_file_size * 1024 * 1024,
-            'backupCount': logs_file_backup_count,
-            'formatter': 'verbose',
-            'filename': os.path.join(LOGS_DIR, 'api.log'),
-        },
         'celery_handler': {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
@@ -55,6 +47,14 @@ logging = {
             'backupCount': logs_file_backup_count,
             'formatter': 'verbose',
             'filename': os.path.join(LOGS_DIR, 'debug.log'),
+        },
+        'info_handler': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'maxBytes': logs_file_size * 1024 * 1024,
+            'backupCount': logs_file_backup_count,
+            'formatter': 'verbose',
+            'filename': os.path.join(LOGS_DIR, 'info.log'),
         },
         'warning_handler': {
             'level': 'WARNING',
@@ -79,11 +79,6 @@ logging = {
             'level': 'DEBUG',
             'propagate': True,
         },
-        'api': {
-            'handlers': ['api_handler'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
         'django.request': {
             'handlers': ['warning_handler', 'error_handler'],
             'level': 'WARNING',
@@ -94,8 +89,18 @@ logging = {
             'level': 'DEBUG',
             'propagate': True,
         },
+        'info_logger': {
+            'handlers': ['info_handler'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'error_logger': {
+            'handlers': ['error_handler'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
         'celery': {
-            'handlers': ['celery_file', 'console'],
+            'handlers': ['celery_handler'],
             'level': 'INFO',
             'propagate': False,
         },

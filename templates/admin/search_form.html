@@ -1,0 +1,83 @@
+{% load i18n static admin_list jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+
+<div class="col-12 pb-4" id="change-list-filters">
+    <form id="changelist-search" class="form-inline" method="GET">
+
+        {% block filters %}
+            {% if cl.has_filters %}
+                 <div class="form-group chnagelist-filters-text">Filters:</div>
+                {% for spec in cl.filter_specs %}{% jazzmin_list_filter cl spec %}{% endfor %}
+            {% endif %}
+        {% endblock %}
+
+
+        {% if cl.search_fields %}
+            {% if not cl.has_filters %}
+                 <div class="form-group chnagelist-filters-text">Filters:</div>
+            {% endif %}
+            <div class="form-group">
+                <input class="form-control" type="text" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar"
+                       placeholder="Enter Search Text">
+            </div>
+        {% endif %}
+
+        {% if cl.has_filters or cl.search_fields %}
+            <div class="form-group" id="search_group">
+                <button type="submit" class="btn {{ jazzmin_ui.button_classes.primary }}"
+                        id="filter-button">{% trans 'Search' %}</button>
+                {% if show_result_count %}
+                    <span class="small quiet">
+                        {% blocktrans count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }}
+                            results{% endblocktrans %}
+                        (<a href="?{% if cl.is_popup %}_popup=1{% endif %}">
+                            {% if cl.show_full_result_count %}
+                                {% blocktrans with full_result_count=cl.full_result_count %}{{ full_result_count }}
+                                    total{% endblocktrans %}
+                            {% else %}
+                                {% trans "Show all" %}
+                            {% endif %}
+                        </a>)
+                    </span>
+                {% endif %}
+                {% admin_extra_filters cl as extra_filters %}
+                {% for pair in extra_filters.items %}
+                    {% if pair.0 != search_var %}<input type="hidden" name="{{ pair.0 }}" value="{{ pair.1 }}">
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    </form>
+</div>
+<script>
+    django.jQuery(document).ready(function () {
+        const selectElement = $(".rangefilter_custom_date_range_quick_select");
+        const form = $("#changelist-search");
+        selectElement.on("change", function () {
+            let selectedValue = $(this).val();
+            if (selectedValue !== null && selectedValue.length > 0) {
+                if (selectedValue.startsWith("?")) {
+                    selectedValue = selectedValue.substring(1);
+                }
+                const queryParams = selectedValue.split("&");
+                for (const param of queryParams) {
+                    const [paramName, paramValue] = param.split("=");
+                    if (paramName.endsWith("__gte") || paramName.endsWith("__lte")) {
+                        const inputToSet = form.find(`input[name="${paramName}"]`);
+                        if (inputToSet.length) {
+                            inputToSet.val(paramValue);
+                        }
+                    }
+                }
+            }
+        });
+        form.on("submit", function (event) {
+            event.preventDefault();
+            const queryParams = form.serializeArray().filter(input => input.value !== "");
+            const queryString = $.param(queryParams);
+            const baseUrl = window.location.href.split('?')[0];
+            window.location.href = queryString ? `${baseUrl}?${queryString}` : baseUrl;
+        });
+    });
+</script>
