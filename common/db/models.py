@@ -2,7 +2,7 @@ from datetime import datetime
 from django.db import models
 from django.db.models.deletion import Collector
 
-from common.managers import SoftDeletionManager
+from common.db.managers import SoftDeletionManager
 from common.utils import manage_delete_dependency
 from users.models import User
 

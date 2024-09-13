@@ -9,6 +9,7 @@ class SoftDeletionQuerySet(QuerySet):
     """
     Custom Queryset to handle Soft Delete
     """
+
     def delete(self, user=None):
         """
         Soft deletes objects in the queryset and manages dependencies.

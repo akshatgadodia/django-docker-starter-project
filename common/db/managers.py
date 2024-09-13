@@ -1,6 +1,6 @@
 from django.db.models import Manager
 
-from common.querysets import BaseQueryset
+from common.db.querysets import BaseQueryset
 
 
 class SoftDeletionManager(Manager.from_queryset(BaseQueryset)):

@@ -4,7 +4,6 @@ from drf_yasg import openapi
 
 from common import constants
 
-# Creating a Swagger/OpenAPI schema view
 swagger_view = get_schema_view(
    openapi.Info(
       title=constants.TITLE,
